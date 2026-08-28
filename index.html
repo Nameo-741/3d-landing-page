@@ -153,3 +153,866 @@
   /* ---------- HUD bottom ---------- */
   .stepper{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:10}
   .step{display:flex;align-items:center;gap:7px;background:none;border:0;cursor:pointer;color:var(--dim);padding:4px 2px
+  ```html
+  /* ---------- HUD bottom ---------- */
+  .stepper{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+    display:flex;align-items:center;gap:10px;z-index:10
+  }
+  .step{
+    display:flex;align-items:center;gap:7px;background:none;border:0;
+    cursor:pointer;color:var(--dim);padding:4px 2px;font-family:'IBM Plex Mono';
+    font-size:9px;letter-spacing:.1em;transition:.2s
+  }
+  .step .dot{
+    width:6px;height:6px;border:1px solid rgba(237,240,228,.3);
+    transition:.2s
+  }
+  .step:hover{color:var(--ink)}
+  .step.active{color:var(--acc)}
+  .step.active .dot{background:var(--acc);border-color:var(--acc)}
+  .step-line{
+    width:24px;height:1px;background:var(--hair)
+  }
+
+  /* ---------- controls ---------- */
+  .controls{
+    position:fixed;right:22px;bottom:22px;z-index:10;
+    display:flex;gap:6px
+  }
+  .ctrl{
+    width:32px;height:32px;display:grid;place-items:center;
+    background:rgba(11,12,9,.72);border:1px solid var(--hair);
+    color:var(--dim);cursor:pointer;transition:.2s
+  }
+  .ctrl:hover{color:var(--acc);border-color:rgba(198,242,78,.45)}
+  .ctrl svg{width:13px;height:13px}
+
+  /* ---------- submit state ---------- */
+  .success{
+    height:100%;display:flex;flex-direction:column;
+    justify-content:center;align-items:flex-start
+  }
+  .success-mark{
+    width:52px;height:52px;border:1px solid var(--acc);
+    display:grid;place-items:center;margin-bottom:22px;
+    color:var(--acc)
+  }
+  .success-mark svg{width:25px;height:25px}
+  .success h2{
+    font-size:32px;line-height:1.05;margin-bottom:14px;
+    letter-spacing:-.02em
+  }
+  .success p{
+    color:#b9bfae;font-size:13px;line-height:1.6;
+    max-width:290px
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:700px){
+    .hud{padding:0 14px;height:48px}
+    .brand-sub,.hud-right .hide-sm{display:none}
+
+    .face{
+      width:min(88vw,400px);
+      height:min(74vh,478px);
+      left:calc(min(88vw,400px) / -2);
+      top:calc(min(74vh,478px) / -2)
+    }
+
+    .face-in{padding:18px 19px 20px}
+    h1{font-size:39px}
+    h1.small{font-size:28px}
+    .lede{font-size:13px}
+    .stepper{bottom:16px}
+    .controls{right:14px;bottom:14px}
+  }
+
+  @media(max-width:430px){
+    .hud-right{gap:8px;font-size:8px}
+    .face{
+      width:calc(100vw - 28px);
+      left:calc((100vw - 28px) / -2)
+    }
+    h1{font-size:35px}
+    .opt .t{font-size:13px}
+    .review{font-size:9px}
+  }
+</style>
+</head>
+
+<body>
+
+<div id="field"></div>
+<div id="veil"></div>
+
+<!-- HUD -->
+<header class="hud">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 16 16" fill="none">
+      <path d="M8 1v14M1 8h14M3 3l10 10M13 3L3 13"
+            stroke="currentColor" stroke-width="1"/>
+    </svg>
+    <div class="brand-name">SYNAPSE<span>//</span><em>07</em></div>
+    <div class="brand-sub">AI ENGINEERING BOOTCAMP</div>
+  </div>
+
+  <div class="hud-right mono">
+    <span>REGISTRATION</span>
+    <span id="clock">--:--:--</span>
+  </div>
+</header>
+
+<!-- 3D STAGE -->
+<div class="stage-outer">
+  <div class="stage">
+    <div class="ring" id="ring">
+
+      <!-- FACE 0 -->
+      <section class="face active" data-step="0">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv" style="--d:0">
+            <span class="fh-l">BOOT SEQUENCE</span>
+            <span>01 / 05</span>
+          </div>
+
+          <div class="face-body">
+            <div class="hero">
+              <div class="eyebrow rv" style="--d:1">AI ENGINEERING / 2026</div>
+
+              <h1 class="rv" style="--d:2">
+                BUILD<br/>
+                <span class="outline">THINGS</span><br/>
+                THAT THINK.
+              </h1>
+
+              <p class="lede rv" style="--d:3">
+                A hands-on engineering bootcamp for building
+                production-grade AI systems from the ground up.
+              </p>
+
+              <div class="meta mono rv" style="--d:4">
+                07 DAYS · 14 PROJECTS · 01 SYSTEM
+              </div>
+            </div>
+
+            <div class="nav-row rv" style="--d:5">
+              <span class="note">
+                SCROLL / DRAG TO ROTATE
+              </span>
+              <button class="btn primary next-btn">
+                BEGIN
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4"
+                        stroke="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FACE 1 -->
+      <section class="face" data-step="1">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv">
+            <span class="fh-l">IDENTITY</span>
+            <span>02 / 05</span>
+          </div>
+
+          <div class="face-body">
+            <div class="fw rv" style="--d:1">
+              <label>01 / FULL NAME</label>
+              <input id="name" type="text" autocomplete="name"
+                     placeholder="Enter your name"/>
+              <div class="msg">NAME REQUIRED</div>
+            </div>
+
+            <div class="fw rv" style="--d:2">
+              <label>02 / EMAIL</label>
+              <input id="email" type="email" autocomplete="email"
+                     placeholder="you@example.com"/>
+              <div class="msg">VALID EMAIL REQUIRED</div>
+            </div>
+
+            <div class="fw rv" style="--d:3">
+              <label>03 / PHONE</label>
+              <input id="phone" type="text" inputmode="tel"
+                     placeholder="+91 XXXXX XXXXX"/>
+              <div class="msg">PHONE REQUIRED</div>
+            </div>
+
+            <div class="nav-row rv" style="--d:4">
+              <button class="btn ghost back-btn">BACK</button>
+              <button class="btn primary next-btn">
+                CONTINUE
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4"
+                        stroke="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FACE 2 -->
+      <section class="face" data-step="2">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv">
+            <span class="fh-l">EXPERIENCE</span>
+            <span>03 / 05</span>
+          </div>
+
+          <div class="face-body">
+            <div class="lab rv" style="--d:1">
+              CURRENT LEVEL
+            </div>
+
+            <div class="opts">
+              <button class="opt rv" data-group="level" data-value="Beginner"
+                      style="--d:2">
+                <span class="idx">01</span>
+                <span class="tx">
+                  <span class="t">BEGINNER</span>
+                  <span class="d">STARTING FROM ZERO</span>
+                </span>
+              </button>
+
+              <button class="opt rv" data-group="level" data-value="Intermediate"
+                      style="--d:3">
+                <span class="idx">02</span>
+                <span class="tx">
+                  <span class="t">INTERMEDIATE</span>
+                  <span class="d">SOME CODING EXPERIENCE</span>
+                </span>
+              </button>
+
+              <button class="opt rv" data-group="level" data-value="Advanced"
+                      style="--d:4">
+                <span class="idx">03</span>
+                <span class="tx">
+                  <span class="t">ADVANCED</span>
+                  <span class="d">BUILDING ML / AI SYSTEMS</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="nav-row rv" style="--d:5">
+              <button class="btn ghost back-btn">BACK</button>
+              <button class="btn primary next-btn">
+                CONTINUE
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4"
+                        stroke="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FACE 3 -->
+      <section class="face" data-step="3">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv">
+            <span class="fh-l">OBJECTIVE</span>
+            <span>04 / 05</span>
+          </div>
+
+          <div class="face-body">
+            <div class="lab rv" style="--d:1">
+              WHAT DO YOU WANT TO BUILD?
+            </div>
+
+            <div class="opts">
+              <button class="opt sm rv" data-group="goal"
+                      data-value="AI Agents" style="--d:2">
+                <span class="idx">01</span>
+                <span class="tx">
+                  <span class="t">AI AGENTS</span>
+                  <span class="d">AUTONOMOUS SYSTEMS</span>
+                </span>
+              </button>
+
+              <button class="opt sm rv" data-group="goal"
+                      data-value="LLM Apps" style="--d:3">
+                <span class="idx">02</span>
+                <span class="tx">
+                  <span class="t">LLM APPLICATIONS</span>
+                  <span class="d">RAG · CHAT · COPILOTS</span>
+                </span>
+              </button>
+
+              <button class="opt sm rv" data-group="goal"
+                      data-value="Computer Vision" style="--d:4">
+                <span class="idx">03</span>
+                <span class="tx">
+                  <span class="t">COMPUTER VISION</span>
+                  <span class="d">VISION AI · MULTIMODAL</span>
+                </span>
+              </button>
+
+              <button class="opt sm rv" data-group="goal"
+                      data-value="Voice AI" style="--d:5">
+                <span class="idx">04</span>
+                <span class="tx">
+                  <span class="t">VOICE AI</span>
+                  <span class="d">SPEECH · REAL-TIME AI</span>
+                </span>
+              </button>
+
+              <button class="opt sm rv" data-group="goal"
+                      data-value="Other" style="--d:6">
+                <span class="idx">05</span>
+                <span class="tx">
+                  <span class="t">OTHER</span>
+                  <span class="d">SOMETHING COMPLETELY NEW</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="nav-row rv" style="--d:7">
+              <button class="btn ghost back-btn">BACK</button>
+              <button class="btn primary next-btn">
+                REVIEW
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4"
+                        stroke="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FACE 4 -->
+      <section class="face" data-step="4">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv">
+            <span class="fh-l">FINAL CHECK</span>
+            <span>05 / 05</span>
+          </div>
+
+          <div class="face-body">
+            <div class="review rv" style="--d:1">
+              <div class="row">
+                <span class="k">NAME</span>
+                <span class="v" id="r-name">—</span>
+              </div>
+
+              <div class="row">
+                <span class="k">EMAIL</span>
+                <span class="v" id="r-email">—</span>
+              </div>
+
+              <div class="row">
+                <span class="k">PHONE</span>
+                <span class="v" id="r-phone">—</span>
+              </div>
+
+              <div class="row">
+                <span class="k">LEVEL</span>
+                <span class="v acc" id="r-level">—</span>
+              </div>
+
+              <div class="row">
+                <span class="k">OBJECTIVE</span>
+                <span class="v acc" id="r-goal">—</span>
+              </div>
+            </div>
+
+            <label class="ck rv" style="--d:2">
+              <input id="terms" type="checkbox"/>
+              <span class="box">
+                <svg viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6l2.5 2.5L10 3"
+                        stroke="currentColor"
+                        stroke-width="1.5"/>
+                </svg>
+              </span>
+              <span>
+                I confirm that the information above is accurate
+                and I want to register for SYNAPSE//07.
+              </span>
+            </label>
+
+            <div class="nav-row rv" style="--d:3">
+              <button class="btn ghost back-btn">BACK</button>
+
+              <button class="btn primary" id="submitBtn" disabled>
+                REGISTER
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 4l4 4-4 4"
+                        stroke="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SUCCESS FACE -->
+      <section class="face" data-step="5">
+        <div class="shade"></div>
+
+        <div class="cnr tl"></div>
+        <div class="cnr tr"></div>
+        <div class="cnr bl"></div>
+        <div class="cnr br"></div>
+
+        <div class="face-in">
+          <div class="face-head rv">
+            <span class="fh-l">SYSTEM ONLINE</span>
+            <span>SUCCESS</span>
+          </div>
+
+          <div class="success">
+            <div class="success-mark rv" style="--d:1">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12l4 4L19 6"
+                      stroke="currentColor"
+                      stroke-width="1.5"/>
+              </svg>
+            </div>
+
+            <h2 class="rv" style="--d:2">
+              YOU'RE<br/>
+              <span class="outline">IN.</span>
+            </h2>
+
+            <p class="rv" style="--d:3">
+              Registration received. Your boot sequence
+              begins soon. Check your inbox for the next steps.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper" id="stepper">
+  <button class="step active" data-go="0">
+    <span class="dot"></span>01
+  </button>
+  <span class="step-line"></span>
+
+  <button class="step" data-go="1">
+    <span class="dot"></span>02
+  </button>
+  <span class="step-line"></span>
+
+  <button class="step" data-go="2">
+    <span class="dot"></span>03
+  </button>
+  <span class="step-line"></span>
+
+  <button class="step" data-go="3">
+    <span class="dot"></span>04
+  </button>
+  <span class="step-line"></span>
+
+  <button class="step" data-go="4">
+    <span class="dot"></span>05
+  </button>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="ctrl" id="prevCtrl" aria-label="Previous">
+    <svg viewBox="0 0 16 16" fill="none">
+      <path d="M10 3L5 8l5 5"
+            stroke="currentColor"
+            stroke-width="1.2"/>
+    </svg>
+  </button>
+
+  <button class="ctrl" id="nextCtrl" aria-label="Next">
+    <svg viewBox="0 0 16 16" fill="none">
+      <path d="M6 3l5 5-5 5"
+            stroke="currentColor"
+            stroke-width="1.2"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+(() => {
+  const ring = document.getElementById('ring');
+  const faces = [...document.querySelectorAll('.face')];
+  const steps = [...document.querySelectorAll('.step')];
+
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+
+  const terms = document.getElementById('terms');
+  const submitBtn = document.getElementById('submitBtn');
+
+  let current = 0;
+  let dragging = false;
+  let startX = 0;
+  let dragRotation = 0;
+
+  const values = {
+    name: '',
+    email: '',
+    phone: '',
+    level: '',
+    goal: ''
+  };
+
+  const faceCount = 6;
+  const angle = 360 / faceCount;
+  const radius = 360;
+
+  // Arrange faces around a 3D cylinder.
+  faces.forEach((face, i) => {
+    face.style.transform =
+      `rotateY(${i * angle}deg) translateZ(${radius}px)`;
+  });
+
+  function updateField() {
+    ring.style.transform =
+      `translate3d(0,0,0) rotateY(${-current * angle + dragRotation}deg)`;
+
+    faces.forEach((face, i) => {
+      face.classList.toggle('active', i === current);
+    });
+
+    steps.forEach((step, i) => {
+      step.classList.toggle('active', i === current);
+    });
+
+    // Restart reveal animations.
+    const active = faces[current];
+    active.querySelectorAll('.rv').forEach(el => {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+
+  function goTo(index, validate = true) {
+    if (index === current) return;
+
+    if (validate && index > current) {
+      if (!validateStep(current)) return;
+    }
+
+    if (index < 0 || index >= faceCount) return;
+
+    current = index;
+    dragRotation = 0;
+    updateField();
+
+    if (current === 4) populateReview();
+  }
+
+  function validateStep(step) {
+    if (step === 0) return true;
+
+    if (step === 1) {
+      let valid = true;
+
+      valid &= validateInput(nameInput, nameInput.value.trim() !== '',
+        'NAME REQUIRED');
+
+      valid &= validateInput(
+        emailInput,
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()),
+        'VALID EMAIL REQUIRED'
+      );
+
+      valid &= validateInput(
+        phoneInput,
+        phoneInput.value.trim().length >= 8,
+        'PHONE REQUIRED'
+      );
+
+      if (valid) {
+        values.name = nameInput.value.trim();
+        values.email = emailInput.value.trim();
+        values.phone = phoneInput.value.trim();
+      }
+
+      return !!valid;
+    }
+
+    if (step === 2) {
+      return !!values.level;
+    }
+
+    if (step === 3) {
+      return !!values.goal;
+    }
+
+    return true;
+  }
+
+  function validateInput(input, condition, message) {
+    const wrapper = input.closest('.fw');
+
+    if (condition) {
+      wrapper.classList.remove('err');
+      return true;
+    }
+
+    wrapper.classList.remove('err');
+    void wrapper.offsetWidth;
+    wrapper.classList.add('err');
+
+    const msg = wrapper.querySelector('.msg');
+    if (msg) msg.textContent = message;
+
+    input.focus();
+    return false;
+  }
+
+  function populateReview() {
+    document.getElementById('r-name').textContent =
+      values.name || '—';
+
+    document.getElementById('r-email').textContent =
+      values.email || '—';
+
+    document.getElementById('r-phone').textContent =
+      values.phone || '—';
+
+    document.getElementById('r-level').textContent =
+      values.level || '—';
+
+    document.getElementById('r-goal').textContent =
+      values.goal || '—';
+  }
+
+  function updateSubmitState() {
+    submitBtn.disabled = !terms.checked;
+  }
+
+  // Next / Back buttons
+  document.querySelectorAll('.next-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      goTo(current + 1);
+    });
+  });
+
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      goTo(current - 1, false);
+    });
+  });
+
+  // Selection buttons
+  document.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const group = opt.dataset.group;
+      const value = opt.dataset.value;
+
+      document
+        .querySelectorAll(`.opt[data-group="${group}"]`)
+        .forEach(item => item.classList.remove('sel'));
+
+      opt.classList.add('sel');
+
+      values[group] = value;
+    });
+  });
+
+  // Terms
+  terms.addEventListener('change', updateSubmitState);
+
+  // Submit
+  submitBtn.addEventListener('click', () => {
+    if (submitBtn.disabled) return;
+
+    submitBtn.disabled = true;
+
+    // Replace this with your real API / backend call.
+    setTimeout(() => {
+      goTo(5, false);
+
+      // Hide stepper because registration is complete.
+      document.getElementById('stepper').style.opacity = '0';
+      document.getElementById('stepper').style.pointerEvents = 'none';
+
+      document.querySelector('.controls').style.display = 'none';
+    }, 450);
+  });
+
+  // Stepper
+  steps.forEach(step => {
+    step.addEventListener('click', () => {
+      const target = Number(step.dataset.go);
+
+      // Allow going backwards freely.
+      if (target <= current) {
+        goTo(target, false);
+        return;
+      }
+
+      // Only move forward one validated screen at a time.
+      if (target > current + 1) {
+        let valid = true;
+
+        for (let i = current; i < target; i++) {
+          if (!validateStep(i)) {
+            valid = false;
+            break;
+          }
+        }
+
+        if (!valid) return;
+      }
+
+      goTo(target);
+    });
+  });
+
+  // Navigation controls
+  document.getElementById('prevCtrl')
+    .addEventListener('click', () => {
+      goTo(current - 1, false);
+    });
+
+  document.getElementById('nextCtrl')
+    .addEventListener('click', () => {
+      goTo(current + 1);
+    });
+
+  // Mouse / touch drag
+  const field = document.getElementById('field');
+
+  function pointerDown(e) {
+    if (current === 5) return;
+
+    dragging = true;
+    field.classList.add('grabbing');
+    startX = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+  }
+
+  function pointerMove(e) {
+    if (!dragging) return;
+
+    const x = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+    const delta = x - startX;
+
+    dragRotation = delta * 0.28;
+
+    ring.style.transform =
+      `rotateY(${-current * angle + dragRotation}deg)`;
+  }
+
+  function pointerUp(e) {
+    if (!dragging) return;
+
+    dragging = false;
+    field.classList.remove('grabbing');
+
+    const x =
+      e.clientX ??
+      e.changedTouches?.[0]?.clientX ??
+      startX;
+
+    const delta = x - startX;
+
+    if (Math.abs(delta) > 55) {
+      if (delta < 0) {
+        goTo(current + 1);
+      } else {
+        goTo(current - 1, false);
+      }
+    } else {
+      dragRotation = 0;
+      updateField();
+    }
+  }
+
+  field.addEventListener('pointerdown', pointerDown);
+  field.addEventListener('pointermove', pointerMove);
+  field.addEventListener('pointerup', pointerUp);
+  field.addEventListener('pointercancel', pointerUp);
+  field.addEventListener('pointerleave', pointerUp);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1, false);
+  });
+
+  // Clock
+  function updateClock() {
+    const now = new Date();
+
+    const time = now.toLocaleTimeString('en-IN', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    document.getElementById('clock').textContent = time;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Automatically clear field errors while typing.
+  [nameInput, emailInput, phoneInput].forEach(input => {
+    input.addEventListener('input', () => {
+      input.closest('.fw')?.classList.remove('err');
+    });
+  });
+
+  // Start state.
+  updateField();
+})();
+</script>
+
+</body>
+</html>
+```
+
