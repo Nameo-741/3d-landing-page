@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+class Calculator {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter two numbers: ");
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+
+        System.out.println("Addition = " + (a + b));
+        System.out.println("Subtraction = " + (a - b));
+        System.out.println("Multiplication = " + (a * b));
+        System.out.println("Division = " + (a / b));
+    }
+}
+
+import java.util.Scanner;
+
+class ReverseString {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a String: ");
+        String str = sc.nextLine();
+
+        String rev = "";
+
+        for(int i = str.length()-1; i >= 0; i--) {
+            rev = rev + str.charAt(i);
+        }
+
+        System.out.println("Reversed String = " + rev);
+    }
+}
+
+import java.util.Scanner;
+
+class PermutationCombination {
+
+    static int factorial(int n) {
+        int fact = 1;
+
+        for(int i = 1; i <= n; i++) {
+            fact = fact * i;
+        }
+
+        return fact;
+    }
+
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter n: ");
+        int n = sc.nextInt();
+
+        System.out.print("Enter r: ");
+        int r = sc.nextInt();
+
+        int nPr = factorial(n) / factorial(n-r);
+        int nCr = factorial(n) /
+                 (factorial(r) * factorial(n-r));
+
+        System.out.println("Permutation = " + nPr);
+        System.out.println("Combination = " + nCr);
+    }
+}
